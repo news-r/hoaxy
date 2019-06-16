@@ -1,0 +1,72 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+<!-- badges: start -->
+[![Travis build status](https://travis-ci.org/news-r/hoaxy.svg?branch=master)](https://travis-ci.org/news-r/hoaxy)
+[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/news-r/hoaxy?branch=master&svg=true)](https://ci.appveyor.com/project/news-r/hoaxy)
+<!-- badges: end -->
+
+# hoaxy
+
+[Hoaxy](https://rapidapi.com/truthy/api/hoaxy) visualizes the spread of claims and related fact checking online. A claim may be a fake news article, hoax, rumor, conspiracy theory, satire, or even an accurate report. Anyone can use Hoaxy to explore how claims spread across social media. You can select any matching fact-checking articles to observe how those spread as well.
+
+## Installation
+
+``` r
+# install.packages("remotes")
+remotes::install_github("news-r/hoaxy")
+```
+
+## Calls
+
+- `hx_articles` - Get fake articles on a specific query. 
+- `hx_tweets` - Get tweets on specific articles.
+- `hx_edges` - Get network of tweets on specific articles.
+- `hx_timeline` - Get timeline of tweets on specific articles.
+- `hx_spreaders` - Get top Twitter users.
+- `hx_top_articles` - Get top articles.
+- `hx_latest_articles` - Get latest fake news.
+
+## Setup
+
+Create a free account at [rapidapi.com](https://rapidapi.com/truthy/api/hoaxy) to create an API key.
+
+```r
+hoaxy_key("xxXXxxXx")
+```
+
+Note that you can specify the `RAPIDAPI_API_KEY` key as an environment variable in your `.Renviron` for convenience.
+
+## Example
+
+Get fakes articles.
+
+```{r}
+library(hoaxy)
+
+(articles <- hx_articles("pizzagate"))
+```
+
+Get tweets on some of said articles.
+
+```{r}
+(tweets <- hx_tweets(articles$id[1:5]))
+```
+
+Get timeline of tweets on articles.
+
+```{r}
+(tl <- hx_timeline(articles$id[1:5]))
+```
