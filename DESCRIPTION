@@ -1,0 +1,19 @@
+Package: hoaxy
+Title: Visualizes the Spread of Claims and Related Fact Checking Online
+Version: 0.0.1
+Authors@R: 
+    c(person(given = "John",
+           family = "Coene",
+           role = c("aut", "cre"),
+           email = "first.last@example.com",
+           comment = c(ORCID = "YOUR-ORCID-ID")),
+      person(family = "news-r", role = "cph"))
+Description: Visualizes the spread of claims and related fact checking online. .
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports:
+  httr,
+  purrr,
+  assertthat
+RoxygenNote: 6.1.1
