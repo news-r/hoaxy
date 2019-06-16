@@ -112,3 +112,32 @@ hx_spreaders <- function(upper_day = NULL, most_recent = FALSE){
   users <- .call_api(upper_day = upper_day, most_recent = most_recent, endpoint = "top-users")
   .parse(users, "spreaders")
 }
+
+#' Top Articles
+#'
+#' Return top 20 most active user for the last 30 days.
+#'
+#' @param upper_day When calculating the most active users, we consider a 30 days window. 
+#' The right bound controls the position of the window and it is called \code{upper_day}, 
+#' e.g., if \code{upper_day} is set to \code{2016-12-01}, then the window ranges between 
+#' \code{2016-11-01} and \code{2016-12-01}. Input format is \code{yyyy-mm-dd}, and the 
+#' default value is the date of yesterday. Note that the endpoint does not accept any 
+#' input more recent than the date of yesterday. Also currently the minimal upper_day value is \code{2016-12-12}.
+#' @param most_recent When set to \code{TRUE}, return most recent available top spreaders, if there is no top spreaders for \code{upper_day}.
+#' @param exclude_tags Use double quote around excluded tags to make sure the URL encoding works on Mashape. 
+#' This parameter controls the filtering of the returned results by excluded tags. 
+#' The tags could be either in format of a list of strings, e.g., \code{list("fake", "satire")}. 
+#' In the latter case, the first element in the tuple indicates the name of the source that tagged the website. 
+#' Please refer to the Hoaxy FAQ for sources.
+#' 
+#' @examples
+#' \dontrun{
+#' hx_spreaders()
+#' }
+#'
+#' @export
+hx_top_articles <- function(upper_day = NULL, most_recent = FALSE, exclude_tags = NULL){
+  if(!is.null(exclude_tags)) exclude_tags <- .build_ids(exclude_tags)
+  users <- .call_api(upper_day = upper_day, most_recent = most_recent, exclude_tags = exclude_tags, endpoint = "most_recent")
+  .parse(users, "articles")
+}
