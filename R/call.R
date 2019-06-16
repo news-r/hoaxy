@@ -15,8 +15,6 @@
 #' articles <- hx_articles("pizzagate")
 #' }
 #'
-#' @importFrom utils menu
-#'
 #' @rdname count
 #' @export
 hx_articles <- function(q, sort_by = c("recent", "relevant")){
@@ -37,8 +35,6 @@ hx_articles <- function(q, sort_by = c("recent", "relevant")){
 #' tweets <- hx_tweets(articles$id[1:5])
 #' }
 #'
-#' @importFrom utils menu
-#'
 #' @rdname count
 #' @export
 hx_tweets <- function(ids){
@@ -48,9 +44,9 @@ hx_tweets <- function(ids){
   .parse(tweets, "tweets")
 }
 
-#' Network
+#' Edges
 #'
-#' Return fake news matching query.
+#' Returns edges of tweets surrounding given articles.
 #'
 #' @param ids A list or vector of article ids to query, see \code{\link{hx_articles}}.
 #' @param nodes_limit Network size limit by number of nodes. Default 1000. 
@@ -61,16 +57,37 @@ hx_tweets <- function(ids){
 #' @examples
 #' \dontrun{
 #' articles <- hx_articles("pizzagate")
-#' network <- hx_network(articles$id[1:5])
+#' network <- hx_edges(articles$id[1:5])
 #' }
-#'
-#' @importFrom utils menu
 #'
 #' @rdname count
 #' @export
-hx_network <- function(ids, nodes_limit = 1000, include_user_mentions = FALSE){
+hx_edges <- function(ids, nodes_limit = 1000, include_user_mentions = FALSE){
   assert_that(!missing(ids), msg = "Missing ids")
   ids <- .build_ids(ids)
-  edges <- .call_api(ids = ids, endpoint = "network")
+  edges <- .call_api(ids = ids, nodes_limit = nodes_limit, include_user_mentions = include_user_mentions, endpoint = "network")
   .parse(edges, "edges")
 }
+
+#' Timeline
+#'
+#' Return timeline of tweets on given articles.
+#'
+#' @param ids A list or vector of article ids to query, see \code{\link{hx_articles}}.
+#' @param resolution The resolution of timeline. \code{H}: hour, \code{D}: day, \code{W}: week, \code{M}: month.
+#'
+#' @examples
+#' \dontrun{
+#' articles <- hx_articles("pizzagate")
+#' tl <- hx_timeline(articles$id[1:5])
+#' }
+#'
+#' @rdname count
+#' @export
+hx_timeline <- function(ids, resolution = c("D", "M", "W", "H")){
+  assert_that(!missing(ids), msg = "Missing ids")
+  ids <- .build_ids(ids)
+  tl <- .call_api(ids = ids, resolution = match.arg(resolution), endpoint = "timeline")
+  .parse_timeline(tl)
+}
+

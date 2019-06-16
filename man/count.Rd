@@ -3,14 +3,17 @@
 \name{hx_articles}
 \alias{hx_articles}
 \alias{hx_tweets}
-\alias{hx_network}
+\alias{hx_edges}
+\alias{hx_timeline}
 \title{Articles}
 \usage{
 hx_articles(q, sort_by = c("recent", "relevant"))
 
 hx_tweets(ids)
 
-hx_network(ids, nodes_limit = 1000, include_user_mentions = FALSE)
+hx_edges(ids, nodes_limit = 1000, include_user_mentions = FALSE)
+
+hx_timeline(ids, resolution = c("D", "M", "W", "H"))
 }
 \arguments{
 \item{q}{Keywords to search in Lucene query syntax is supported, e.g., \code{+title:Trump}. 
@@ -27,6 +30,10 @@ fields contain pizzagate and the date_published is between \code{2016-10-28} to 
 When nodes of network exceeds this parameter, a k-core algorithm is used to remove 
 the least degree nodes and the associated edges.}
 
+\item{resolution}{The resolution of timeline. \code{H}: hour, \code{D}: day, \code{W}: week, \code{M}: month.}
+
+\item{ids}{A list or vector of article ids to query, see \code{\link{hx_articles}}.}
+
 \item{ids}{A list or vector of article ids to query, see \code{\link{hx_articles}}.}
 }
 \description{
@@ -34,7 +41,9 @@ Return fake news matching query.
 
 Return tweets on specific fake articles.
 
-Return fake news matching query.
+Returns edges of tweets surrounding given articles.
+
+Return timeline of tweets on given articles.
 }
 \examples{
 \dontrun{
@@ -48,7 +57,12 @@ tweets <- hx_tweets(articles$id[1:5])
 
 \dontrun{
 articles <- hx_articles("pizzagate")
-network <- hx_network(articles$id[1:5])
+network <- hx_edges(articles$id[1:5])
+}
+
+\dontrun{
+articles <- hx_articles("pizzagate")
+tl <- hx_timeline(articles$id[1:5])
 }
 
 }

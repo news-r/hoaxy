@@ -35,3 +35,18 @@ BASE_URL <- "https://api-hoaxy.p.rapidapi.com"
   
   paste0("[", ids, "]")
 }
+
+.parse_timeline <- function(tl){
+  tl <- tl[["timeline"]]
+  n <- names(tl)
+
+  tl[[1]]$type <- n[[1]]
+  tl[[2]]$type <- n[[2]]
+
+  tl %>% map(
+    function(x){
+      map(x, unlist)
+    }
+  ) %>% 
+  map_dfr(tibble::as_tibble)
+}
