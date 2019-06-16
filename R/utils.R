@@ -50,3 +50,11 @@ BASE_URL <- "https://api-hoaxy.p.rapidapi.com"
   ) %>% 
   map_dfr(tibble::as_tibble)
 }
+
+.parse_latest <- function(articles){
+  articles[["articles"]] %>% 
+    map_dfr(function(x){
+      x$site_tags <- list(x$site_tags)
+      tibble::as_tibble(x)
+    })
+}

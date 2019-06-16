@@ -132,12 +132,33 @@ hx_spreaders <- function(upper_day = NULL, most_recent = FALSE){
 #' 
 #' @examples
 #' \dontrun{
-#' hx_spreaders()
+#' hx_top_articles()
 #' }
 #'
 #' @export
 hx_top_articles <- function(upper_day = NULL, most_recent = FALSE, exclude_tags = NULL){
   if(!is.null(exclude_tags)) exclude_tags <- .build_ids(exclude_tags)
-  users <- .call_api(upper_day = upper_day, most_recent = most_recent, exclude_tags = exclude_tags, endpoint = "most_recent")
-  .parse(users, "articles")
+  articles <- .call_api(upper_day = upper_day, most_recent = most_recent, exclude_tags = exclude_tags, endpoint = "top-articles")
+  .parse(articles, "articles")
+}
+
+#' Top Articles
+#'
+#' Return top 20 most active user for the last 30 days.
+#'
+#' @param past_hours Hours from "now" (\code{Sys.time()}), you are suggested to start this number from 2 as servers are not real time.
+#' @param domains Return articles restrained to these domains. Default is None, return all available articles. 
+#' If \code{fact_checking}, return only fact checking articles. If \code{claim}, return only claim articles. 
+#' If \code{fake}, return articles from sites marking as fake by our configuration. You can also input a domain list. 
+#' 
+#' @examples
+#' \dontrun{
+#' hx_latest_articles()
+#' }
+#'
+#' @export
+hx_latest_articles <- function(past_hours = 2, domains = NULL){
+  if(!is.null(domains)) domains <- .build_ids(domains)
+  latest <- .call_api(past_hours = past_hours, domains = domains, endpoint = "latest-articles")
+  .parse_latest(latest)
 }
