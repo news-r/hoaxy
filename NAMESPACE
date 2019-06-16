@@ -3,6 +3,7 @@
 export(hoaxy_key)
 export(hx_articles)
 export(hx_edges)
+export(hx_spreaders)
 export(hx_timeline)
 export(hx_tweets)
 import(assertthat)
