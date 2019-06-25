@@ -1,6 +1,6 @@
 Package: hoaxy
 Title: Visualizes the Spread of Claims and Related Fact Checking Online
-Version: 0.0.1
+Version: 0.0.2
 Authors@R: 
     c(person(given = "John",
            family = "Coene",
