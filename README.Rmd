@@ -1,5 +1,7 @@
 ---
-output: github_document
+output:
+  github_document:
+    html_preview: false
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -51,7 +53,7 @@ Note that you can specify the `RAPIDAPI_API_KEY` key as an environment variable 
 
 ## Example
 
-Get fakes articles.
+Get fake articles.
 
 ```{r}
 library(hoaxy)
@@ -65,8 +67,12 @@ Get tweets on some of said articles.
 (tweets <- hx_tweets(articles$id[1:5]))
 ```
 
-Get timeline of tweets on articles.
+Get network of tweets on articles.
 
-```{r}
-(tl <- hx_timeline(articles$id[1:5]))
+```r
+(edges <- hx_edges(articles$id[1:5]))
+
+plot(edges)
 ```
+
+![](plot.png)

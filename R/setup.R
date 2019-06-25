@@ -11,6 +11,7 @@
 #' newsapi_key("xXXxxXxXxXXx")  
 #' }
 #' 
+#' @import sigmajs
 #' @import purrr
 #' @import httr
 #' @import assertthat

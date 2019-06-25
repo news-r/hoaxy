@@ -66,7 +66,8 @@ hx_edges <- function(ids, nodes_limit = 1000, include_user_mentions = FALSE){
   assert_that(!missing(ids), msg = "Missing ids")
   ids <- .build_ids(ids)
   edges <- .call_api(ids = ids, nodes_limit = nodes_limit, include_user_mentions = include_user_mentions, endpoint = "network")
-  .parse(edges, "edges")
+  edges <- .parse(edges, "edges")
+  structure(edges, class = c(class(edges), "hoaxy_edges"))
 }
 
 #' Timeline
